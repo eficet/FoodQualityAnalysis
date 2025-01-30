@@ -1,0 +1,50 @@
+﻿services:
+  qualitymanager:
+    image: qualitymanager
+    build:
+      context: .
+      dockerfile: QualityManager/Dockerfile
+    ports:
+      - "5002:8080"
+    depends_on:
+      - sqlserver
+      - rabbitmq
+    environment:
+      - ConnectionStrings__DefaultConnection=Server=sqlserver,1433;Database=QualityManagerDb;User Id=sa;Password=Test123!;TrustServerCertificate=True;
+
+  analysisengine:
+    image: analysisengine
+    build:
+      context: .
+      dockerfile: AnalysisEngine/Dockerfile
+    environment:
+      - ConnectionStrings__DefaultConnection=Server=sqlserver,1433;Database=AnalysisEngineDb;User Id=sa;Password=Test123!;TrustServerCertificate=True;
+    depends_on:
+      - sqlserver
+      - rabbitmq
+    ports:
+      - "5005:8082"
+    
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"       # Port for RabbitMQ messaging
+      - "15672:15672"     # Port for RabbitMQ Management UI
+    environment:
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: admin
+      
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    volumes:
+      - sqlserver-data:/var/opt/mssql
+    container_name: sqlserver
+    ports:
+      - "1433:1433"
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "Test123!"
+      
+volumes:
+  sqlserver-data:
