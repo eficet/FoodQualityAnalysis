@@ -8,7 +8,7 @@ using QualityManager.Enums;
 
 namespace QualityManager.MessageHandlers;
 
-[QueueName("food_quality_analysis_response_queue")]
+[QueueName("food_analysis_response")]
 public class FoodQualityAnalysisResponseConsumer: MessageConsumer<AnalysisResultResponse>
 {
     private readonly ILogger<FoodQualityAnalysisResponseConsumer> _logger;
@@ -19,12 +19,12 @@ public class FoodQualityAnalysisResponseConsumer: MessageConsumer<AnalysisResult
         _logger = logger;
     }
 
-    protected override async Task HandleMessage(AnalysisResultResponse message)
+    public override async Task HandleMessage(AnalysisResultResponse message)
     {
         try
         {
             using var scope = _serviceProvider.CreateScope();
-            var datacontext = scope.ServiceProvider.GetRequiredService<DataContext>();
+            var datacontext = scope.ServiceProvider.GetRequiredService<QualityManagerContext>();
             var foodBatch = await datacontext.FoodBatches.FirstOrDefaultAsync(s => s.SerialNumber == message.SerialNumber);
             if (foodBatch != null)
             {

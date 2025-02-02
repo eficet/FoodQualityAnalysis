@@ -5,11 +5,18 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3EAAE80A-D7DB-4193-978A-6995F9099A86}"
 	ProjectSection(SolutionItems) = preProject
 		compose.yaml = compose.yaml
+		compose.override.yaml = compose.override.yaml
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnalysisEngine", "AnalysisEngine\AnalysisEngine.csproj", "{8687098C-BD4E-4B2B-81E2-CD8642DD4166}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoodQualityAnalysis.Common", "FoodQualityAnalysis.Common\FoodQualityAnalysis.Common.csproj", "{52284911-FD36-4350-B90E-D3D63AB413EE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoodQualityAnalysis.Integration.Tests", "FoodQualityAnalysis.Integration.Tests\FoodQualityAnalysis.Integration.Tests.csproj", "{FFA95EE4-4416-4F86-B293-4590303A8DFD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{FE7DBFC9-663E-479E-846B-958899EDBCA3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoodQualityAnalysis.Tests", "FoodQualityAnalysis.Tests\FoodQualityAnalysis.Tests.csproj", "{FD565C2D-F3C8-42F3-815F-F420AC4F72FD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,5 +36,17 @@ Global
 		{52284911-FD36-4350-B90E-D3D63AB413EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{52284911-FD36-4350-B90E-D3D63AB413EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{52284911-FD36-4350-B90E-D3D63AB413EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FFA95EE4-4416-4F86-B293-4590303A8DFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FFA95EE4-4416-4F86-B293-4590303A8DFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FFA95EE4-4416-4F86-B293-4590303A8DFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FFA95EE4-4416-4F86-B293-4590303A8DFD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD565C2D-F3C8-42F3-815F-F420AC4F72FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD565C2D-F3C8-42F3-815F-F420AC4F72FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD565C2D-F3C8-42F3-815F-F420AC4F72FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD565C2D-F3C8-42F3-815F-F420AC4F72FD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{FFA95EE4-4416-4F86-B293-4590303A8DFD} = {FE7DBFC9-663E-479E-846B-958899EDBCA3}
+		{FD565C2D-F3C8-42F3-815F-F420AC4F72FD} = {FE7DBFC9-663E-479E-846B-958899EDBCA3}
 	EndGlobalSection
 EndGlobal

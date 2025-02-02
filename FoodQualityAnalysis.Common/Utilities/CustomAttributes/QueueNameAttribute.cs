@@ -7,6 +7,6 @@ public class QueueNameAttribute : Attribute
 
     public QueueNameAttribute(string queueName)
     {
-        QueueName = queueName;
+        QueueName = ConfigurationHelper.GetQueueName(queueName);
     }
 }

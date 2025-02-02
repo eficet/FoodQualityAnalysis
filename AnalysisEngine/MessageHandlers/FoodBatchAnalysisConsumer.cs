@@ -3,11 +3,12 @@ using AnalysisEngine.Data.Entities;
 using FoodQualityAnalysis.Common;
 using FoodQualityAnalysis.Common.DTOs;
 using FoodQualityAnalysis.Common.MessageBroker;
+using FoodQualityAnalysis.Common.Utilities;
 using FoodQualityAnalysis.Common.Utilities.CustomAttributes;
 
 namespace AnalysisEngine.MessageHandlers;
 
-[QueueName("food_batch_analysis_queue")]
+[QueueName("food_analysis_queue")]
 public class FoodBatchAnalysisConsumer: MessageConsumer<FoodBatchRequest>
 {
     private readonly IMessageProducer _producer;
@@ -21,7 +22,7 @@ public class FoodBatchAnalysisConsumer: MessageConsumer<FoodBatchRequest>
     }
     
 
-    protected override async Task HandleMessage(FoodBatchRequest message)
+    public override async Task HandleMessage(FoodBatchRequest message)
     {
         try
         {
@@ -37,7 +38,7 @@ public class FoodBatchAnalysisConsumer: MessageConsumer<FoodBatchRequest>
             var context = scope.ServiceProvider.GetRequiredService<DataContext>();
             await context.AddAsync(analysisResult);
             await context.SaveChangesAsync();
-            await _producer.SendMessage("food_quality_analysis_response_queue", analysisResult);
+            await _producer.SendMessage(ConfigurationHelper.GetQueueName("food_analysis_response"), analysisResult);
         }
         catch (Exception ex)
         {

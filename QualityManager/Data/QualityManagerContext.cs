@@ -3,9 +3,9 @@ using QualityManager.Data.Entities;
 
 namespace QualityManager.Data;
 
-public class DataContext : DbContext
+public class QualityManagerContext : DbContext
 {
-    public DataContext(DbContextOptions<DataContext> options) : base(options) { }
+    public QualityManagerContext(DbContextOptions<QualityManagerContext> options) : base(options) { }
 
     public DbSet<FoodBatch> FoodBatches { get; set; }
 

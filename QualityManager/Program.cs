@@ -1,6 +1,7 @@
 using FoodQualityAnalysis.Common;
 using FoodQualityAnalysis.Common.MessageBroker;
 using FoodQualityAnalysis.Common.Middlewares;
+using FoodQualityAnalysis.Common.Utilities;
 using Microsoft.EntityFrameworkCore;
 using QualityManager.AutoMapper;
 using QualityManager.Data;
@@ -12,7 +13,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddDbContext<DataContext>(options=> options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")) );
+ConfigurationHelper.Initialize(builder.Configuration);
+builder.Services.AddDbContext<QualityManagerContext>(options=> options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")) );
 builder.Services.AddSingleton<IMessageConnection, MessageConnection>();
 builder.Services.AddScoped<IMessageProducer, MessageProducer>();
 builder.Services.AddScoped<IFoodQualityService, FoodQualityService>();
@@ -42,7 +44,7 @@ using (var serviceScope = app.Services.CreateScope())
     var messageConnection = serviceScope.ServiceProvider.GetService<IMessageConnection>();
     await messageConnection.InitializeConnection();
     
-    var context = serviceScope.ServiceProvider.GetService<DataContext>();
+    var context = serviceScope.ServiceProvider.GetService<QualityManagerContext>();
     await context.Database.MigrateAsync();
 }
 await app.RunAsync();

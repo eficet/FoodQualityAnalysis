@@ -9,7 +9,7 @@ public class FoodBatchRequest
     public string FoodName { get; set; }
 
     [Required(ErrorMessage = "Serial number is required.")]
-    [RegularExpression(@"^[A-Z0-9]{10}$", ErrorMessage = "Serial number must be 10 alphanumeric characters.")]
+    [RegularExpression(@"^[A-Za-z0-9]{10}$", ErrorMessage = "Serial number must be 10 alphanumeric characters.")]
     public string SerialNumber { get; set; }
 
     [Required(ErrorMessage = "Analysis type is required.")]

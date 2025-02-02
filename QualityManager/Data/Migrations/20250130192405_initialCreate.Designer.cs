@@ -11,7 +11,7 @@ using QualityManager.Data;
 
 namespace QualityManager.Data.Migrations
 {
-    [DbContext(typeof(DataContext))]
+    [DbContext(typeof(QualityManagerContext))]
     [Migration("20250130192405_initialCreate")]
     partial class initialCreate
     {

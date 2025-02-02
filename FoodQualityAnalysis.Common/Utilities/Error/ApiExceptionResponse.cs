@@ -1,8 +1,8 @@
 namespace FoodQualityAnalysis.Common.Utilities.Error;
 
-public class ApiExceptionResponse
+public class ApiExceptionResponse 
 {
-    public ApiExceptionResponse(int statusCode, string message, string? details)
+    public ApiExceptionResponse(int statusCode, string message, string? details = null)
     {
         StatusCode = statusCode;
         Message = message;

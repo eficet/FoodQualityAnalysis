@@ -1,6 +1,9 @@
+using System.Net;
 using AutoMapper;
 using FoodQualityAnalysis.Common;
 using FoodQualityAnalysis.Common.DTOs;
+using FoodQualityAnalysis.Common.Utilities;
+using FoodQualityAnalysis.Common.Utilities.Error;
 using Microsoft.EntityFrameworkCore;
 using QualityManager.Data;
 using QualityManager.Data.Entities;
@@ -11,12 +14,12 @@ namespace QualityManager.Services;
 
 public class FoodQualityService : IFoodQualityService
 {
-    private DataContext _context;
+    private QualityManagerContext _context;
     private IMessageProducer _producer;
     private ILogger<FoodQualityService> _logger;
     private IMapper _mapper;
 
-    public FoodQualityService(DataContext context, IMessageProducer producer, ILogger<FoodQualityService> logger, IMapper mapper)
+    public FoodQualityService(QualityManagerContext context, IMessageProducer producer, ILogger<FoodQualityService> logger, IMapper mapper)
     {
         _context = context;
         _producer = producer;
@@ -28,7 +31,7 @@ public class FoodQualityService : IFoodQualityService
     {
         if (!Enum.TryParse(foodBatch.AnalysisType, out AnalysisType analysisType))
         {
-            throw new ArgumentException("Invalid analysis type");
+            throw new ApiException(HttpStatusCode.BadRequest, "Invalid analysis type");
         }
         
         var foodBatchEntity = new FoodBatch
@@ -42,7 +45,7 @@ public class FoodQualityService : IFoodQualityService
 
         await _context.AddAsync(foodBatchEntity);
         await _context.SaveChangesAsync();
-        await _producer.SendMessage("food_batch_analysis_queue", foodBatch);
+        await _producer.SendMessage(ConfigurationHelper.GetQueueName("food_analysis_queue"), foodBatch);
         return _mapper.Map<FoodBatchResponse>(foodBatchEntity);
     }
 
@@ -51,7 +54,7 @@ public class FoodQualityService : IFoodQualityService
         var foodBatchEntity =await _context.FoodBatches.FirstOrDefaultAsync(x => x.SerialNumber == serialNumber);
         if (foodBatchEntity == null)
         {
-            throw new ArgumentException("Invalid serial number");
+            throw new ApiException(HttpStatusCode.BadRequest,"Invalid serial number");
         }
 
         return $"Processing {foodBatchEntity.Status} : {foodBatchEntity.Result}";

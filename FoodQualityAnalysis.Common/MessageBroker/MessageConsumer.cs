@@ -74,7 +74,7 @@ public abstract class MessageConsumer<T> : BackgroundService
         }
     }
 
-    protected abstract Task HandleMessage(T message);
+    public abstract Task HandleMessage(T message);
 
     public override async Task StopAsync(CancellationToken cancellationToken)
     {

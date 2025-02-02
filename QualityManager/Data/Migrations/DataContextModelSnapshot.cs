@@ -10,7 +10,7 @@ using QualityManager.Data;
 
 namespace QualityManager.Data.Migrations
 {
-    [DbContext(typeof(DataContext))]
+    [DbContext(typeof(QualityManagerContext))]
     partial class DataContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

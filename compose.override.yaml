@@ -1,0 +1,23 @@
+services:
+  qualitymanager_TEST:
+    image: qualitymanager
+    build:
+      context: .
+      dockerfile: QualityManager/Dockerfile
+    ports:
+      - "5004:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Test
+      - ConnectionStrings__DefaultConnection=Server=sqlserver,1433;Database=FoodQualityAnalysisTestDb;User Id=sa;Password=Test123!;TrustServerCertificate=True;
+
+  analysisengine_TEST:
+    image: analysisengine
+    build:
+      context: .
+      dockerfile: AnalysisEngine/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Test
+      - ConnectionStrings__DefaultConnection=Server=sqlserver,1433;Database=FoodQualityAnalysisTestDb;User Id=sa;Password=Test123!;TrustServerCertificate=True;
+    ports:
+      - "5008:8080"
+  
