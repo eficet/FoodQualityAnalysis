@@ -1,6 +1,7 @@
 using AutoMapper;
 using FoodQualityAnalysis.Common;
 using FoodQualityAnalysis.Common.DTOs;
+using FoodQualityAnalysis.Common.Utilities.Error;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Moq;
@@ -55,7 +56,7 @@ public class FoodQualityServiceTests
     }
     
     [Fact]
-    public async Task ProcessFoodBatchAsync_InvalidInput_ThrowsArgumentException()
+    public async Task ProcessFoodBatchAsync_InvalidInput_ThrowsApiException()
     {
         var request = new FoodBatchRequest
         {
@@ -64,6 +65,6 @@ public class FoodQualityServiceTests
             AnalysisType = "Wrong Input" // Invalid input
         };
 
-        await Assert.ThrowsAsync<ArgumentException>(() => _foodQualityService.ProcessFoodBatch(request));
+        await Assert.ThrowsAsync<ApiException>(() => _foodQualityService.ProcessFoodBatch(request));
     }
 }
